@@ -19,3 +19,50 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* defines how smoothly a transformation occurs */
+.item{
+  transition: transform 0.5s ease-in-out
+}
+
+
+/* ANIMATION FOR NEXT CLICK */
+
+/* animation to slide in the next item from the right */
+.item.slideIn{
+  z-index: 10;
+  animation: slideNext 0.9s  ease-in-out 1 forwards;
+
+
+/* moves the previous item to the back */
+.behind{
+  z-index: 9;
+  /* opacity: 0; */
+}}
+
+
+/* keyframe for sliding in animation */
+@keyframes slideNext{
+  from{
+    transform: translateX(100%);
+  }
+  to{
+    transform: translateX(0%);
+  }
+}
+
+
+/* ANIMATION FOR PREV CLICK */
+.item.slideBack{
+  z-index: 10;
+  animation: slidePrev 0.5s ease-in-out 1 forwards;
+}
+
+@keyframes slidePrev {
+  from{
+    transform: translateX(-100%);
+  }
+  to{
+    transform: translateX(0%);
+  }
+}

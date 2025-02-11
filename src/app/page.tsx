@@ -1,101 +1,211 @@
+// 'use client'
+// import Image from "next/image";
+// // import Carousel from './components/carousel';
+// import {useEffect, useState, useRef} from 'react'
+// import { FaArrowAltCircleLeft, FaArrowAltCircleRight  } from "react-icons/fa"
+// import "./globals.css";
+
+// export default function Home(){
+//   const [currentIndex, setCurrentIndex]=useState(0);
+//   const [slideDirection, setSlideDirection] =useState<'next' | 'prev' | null>(null)       //track slide direction
+//   const itemsRef = useRef<HTMLElement[]>([])            //Ref for items
+//   console.log('ITEMS REF:',itemsRef)
+
+//   const nextSlide = () => {
+//     if(slideDirection) return     //prevent clicks during animation
+
+//     setSlideDirection('next')
+//     const nextIndex =(currentIndex + 1)% pictures.length
+    
+//     // Use a setTimeout to ensure the DOM is updated before accessing refs:
+//     setTimeout(() => {
+//       if (itemsRef.current[currentIndex] && itemsRef.current[nextIndex]) { // Check if elements exist
+//           itemsRef.current[currentIndex].classList.add('behind');
+//           itemsRef.current[nextIndex].classList.add('slideIn');
+//           setCurrentIndex(nextIndex);
+//       }
+//   }, 0); // Zero timeout to execute after render
+//   };
+
+//   const prevSlide= () =>{
+//     if(slideDirection) return
+
+//     setSlideDirection('prev')
+//     const prevIndex =(currentIndex -1 + pictures.length)% pictures.length
+
+//     setTimeout(() => {
+//       if (itemsRef.current[currentIndex] && itemsRef.current[prevIndex]) { // Check if elements exist
+//           itemsRef.current[currentIndex].classList.add('behind');
+//           itemsRef.current[prevIndex].classList.add('slideBack');
+//           setCurrentIndex(prevIndex);
+//       }
+//   }, 0); // Zero timeout to execute after render
+//   }   //, '/images/img6.avif', '/images/img7.avif', '/images/img9.jpeg', '/images/img10.jpeg',  '/images/img12.avif', '/images/img13.jpg', '/images/img14.jpeg','/images/img16.jpeg'
+
+
+//   useEffect(() =>{
+//     const items = itemsRef.current
+//     const handleAnimationEnd = (event: AnimationEvent) =>{
+//       if(event.target instanceof HTMLElement){
+//         event.target.classList.remove('slideIn', 'slideBack', 'behind')
+//       }
+//       setSlideDirection(null)   //reset slide direction, enable clicks
+//     };
+
+//     items.forEach((item) =>{
+//       item?.addEventListener('animationend', handleAnimationEnd)
+//     });
+
+//     return() =>{
+//       items.forEach((item) =>{
+//         item?.removeEventListener('animationend', handleAnimationEnd)
+//       })
+//     }
+//   },[])
+
+//   const pictures=['/images/img1.avif',"/images/img2.avif",'/images/img3.webp', '/images/img4.webp']
+//   return(
+//     <main className="carousel overflow-hidden relative  h-[100vh] w-[100vw]">
+
+//         {/* <div className="slider h-[100vh] w-[100vw] relative"> */}
+//             {pictures.map((pic, index) =>(
+//                 <div key={index}
+//                      className="item absolute inset-0 w-full h-full" 
+//                      style={{zIndex: index === 0 ? 10: 1}}
+//                      ref={(el) =>{   //Ref callback
+//                       if(el){       //check if 'el' is not null before assigning
+//                         itemsRef.current[index] =el;
+//                       }
+//                      }}>
+//                     <Image src={pic} alt="weather " fill className="object cover"/>
+//                 </div>
+//             ))}
+
+//             <div className="absolute top-0 left-0 w-full h-full justify-between items-center flex text-white text-3xl px-8  z-10">
+//                 <button onClick={prevSlide} disabled={slideDirection !== null}>{/*Disable during animation*/}
+//                   <FaArrowAltCircleLeft  />
+//                 </button>
+//                 <button onClick={nextSlide} disabled={slideDirection !== null}>{/*Disable during animation*/}
+//                    <FaArrowAltCircleRight /> 
+//                 </button>
+//             </div>
+//         {/* </div> */}
+
+//     </main>
+//   );
+// }
+
+'use client';
 import Image from "next/image";
+import { useEffect, useState, useRef } from 'react';
+import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
+import "./globals.css";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [slideDirection, setSlideDirection] = useState<'next' | 'prev' | null>(null); // Track slide direction
+  const itemsRef = useRef<HTMLElement[]>([]); // Ref for items
+  const intervalRef =useRef<NodeJS.Timeout |null>(null)
+  // console.log('ITEMSREF:' ,itemsRef)
+  console.log('itemsRef.current', itemsRef.current)
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const nextSlide = () => {
+    if (slideDirection) return; // Prevent clicks during animation
+
+    setSlideDirection('next');
+    const nextIndex = (currentIndex + 1) % pictures.length;
+
+    setTimeout(() => {
+      if (itemsRef.current[currentIndex] && itemsRef.current[nextIndex]) { // Check if elements exist
+        // itemsRef.current[nextIndex].classList.remove("behind"); // Ensure previous `.behind` is cleared
+          itemsRef.current[nextIndex].classList.add('slideIn');
+          itemsRef.current[currentIndex].classList.add('behind');
+          setCurrentIndex(nextIndex);
+      }
+  }, 60); // Zero timeout to execute after render
+  };
+
+  const prevSlide = () => {
+    if (slideDirection) return; // Prevent clicks during animation
+
+    setSlideDirection('prev');
+    const prevIndex = (currentIndex - 1 + pictures.length) % pictures.length; // Correct previous index
+
+    setTimeout(() => {
+      if (itemsRef.current[currentIndex] && itemsRef.current[prevIndex]) { // Check if elements exist
+        // itemsRef.current[prevIndex].classList.remove("behind"); // Remove `.behind` before switching
+          itemsRef.current[prevIndex].classList.add('slideBack');
+          itemsRef.current[currentIndex].classList.add('behind');
+          setCurrentIndex(prevIndex);
+      }
+  }, 60); // Zero timeout to execute after render
+  };
+
+  
+  // Automatically call nextSlide every 7 seconds
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      nextSlide();
+    }, 4000); // Calls nextSlide every 7 seconds
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current); // Cleanup on unmount
+      }
+    };
+  }, [currentIndex]); // Restart interval whenever `currentIndex` updates
+
+  useEffect(() => {
+    const items = itemsRef.current; // Create a copy here!
+
+    const handleAnimationEnd = (event: AnimationEvent) => {
+      if (event.target instanceof HTMLElement) {
+        event.target.classList.remove('slideIn', 'slideBack', 'behind');
+        // event.target.style.zIndex = "1"; // Reset z-index after animation
+      }
+      setSlideDirection(null);
+    };
+
+    items.forEach((item) => { // Use the copy 'items'
+      item.addEventListener('animationend', handleAnimationEnd);
+    });
+
+    return () => {
+      items.forEach((item) => { // Use the copy 'items' in cleanup as well
+        item.removeEventListener('animationend', handleAnimationEnd);
+      });
+    };
+  }, []); // Empty dependency array ensures this runs only on mount/unmount
+
+  const pictures = ['/images/img1.avif',"/images/img2.avif",'/images/img3.webp', '/images/img4.webp'];
+
+  return (
+    <main className="carousel overflow-hidden relative h-[100vh] w-[100vw]">
+      {pictures.map((pic, index) => (
+        <div
+          key={index}
+          className="item absolute inset-0 w-full h-full"
+          ref={(el) => { // Ref callback
+            if (el) { // Check if 'el' is not null before assigning
+              itemsRef.current[index] = el;
+            }
+          }}
+          style={{ zIndex: index === currentIndex ? 10 : 1}} // Z-index management
+        >
+          <Image src={pic} alt="weather " fill className="object cover" />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      ))}
+
+      <div className="absolute top-0 left-0 w-full h-full justify-between items-center flex text-white text-3xl px-8 z-10">
+        <button onClick={prevSlide} disabled={slideDirection !== null}> {/* Disable during animation */}
+          <FaArrowAltCircleLeft />
+        </button>
+        <button onClick={nextSlide} disabled={slideDirection !== null}> {/* Disable during animation */}
+          <FaArrowAltCircleRight />
+        </button>
+      </div>
+
+      {/* <button className="">Weather Forecast</button> */}
+    </main>
   );
 }
