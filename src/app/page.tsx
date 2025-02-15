@@ -100,6 +100,7 @@ import Image from "next/image";
 import { useEffect, useState, useRef } from 'react';
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 import "./globals.css";
+import Link from "next/link";
 
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -206,6 +207,9 @@ export default function Home() {
       </div>
 
       {/* <button className="">Weather Forecast</button> */}
+      <Link href={"/dashboard"} className="absolute top-[80%] z-20">
+        <button>Dashboard</button>
+      </Link>
     </main>
   );
 }
