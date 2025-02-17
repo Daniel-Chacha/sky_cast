@@ -88,15 +88,15 @@ export default async function fetchWeatherData({req}:{req:number[]}){
         hourly: {
             time: range(Number(hourly.time()), Number(hourly.timeEnd()), hourly.interval()).map(
                 (t) => new Date((t + utcOffsetSeconds) * 1000)
-            ).slice(0, 7),
-            temperature2m: [...hourly.variables(0)!.valuesArray()!].slice(0, 7),  // ✅ Convert Float32Array to number[]
-            precipitationProbability: [...hourly.variables(2)!.valuesArray()!].slice(0, 7),  // ✅ Fix here
-            rain: [...hourly.variables(3)!.valuesArray()!].slice(0, 7),
-            surfacePressure: [...hourly.variables(5)!.valuesArray()!].slice(0, 7),
-            cloudCover: [...hourly.variables(6)!.valuesArray()!].slice(0, 7),
-            visibility: [...hourly.variables(7)!.valuesArray()!].slice(0, 7),
-            windSpeed10m: [...hourly.variables(8)!.valuesArray()!].slice(0, 7),
-            uvIndex: [...hourly.variables(10)!.valuesArray()!].slice(0,7),  // ✅ Fix here
+            ).slice(1, 7),
+            temperature2m: [...hourly.variables(0)!.valuesArray()!].slice(1, 7),  // ✅ Convert Float32Array to number[]
+            precipitationProbability: [...hourly.variables(2)!.valuesArray()!].slice(1, 7),  // ✅ Fix here
+            rain: [...hourly.variables(3)!.valuesArray()!].slice(1, 7),
+            surfacePressure: [...hourly.variables(5)!.valuesArray()!].slice(1, 7),
+            cloudCover: [...hourly.variables(6)!.valuesArray()!].slice(1, 7),
+            visibility: [...hourly.variables(7)!.valuesArray()!].slice(1, 7),
+            windSpeed10m: [...hourly.variables(8)!.valuesArray()!].slice(1, 7),
+            uvIndex: [...hourly.variables(10)!.valuesArray()!].slice(1,7),  // ✅ Fix here
         },
         daily: {
             time: range(Number(daily.time()), Number(daily.timeEnd()), daily.interval()).map(

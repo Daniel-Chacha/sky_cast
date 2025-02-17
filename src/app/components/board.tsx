@@ -1,5 +1,5 @@
 'use client'
-import React from "react"
+import React, {useEffect, useState} from "react"
 import { BoardData } from "./types"
 import {getWeatherIcon} from "./getWeatherIcon"
 
@@ -8,23 +8,41 @@ interface WeatherBoardProps{
     data: BoardData
 }
 
-
 export const  Board: React.FC<WeatherBoardProps> = ({data}) =>{
+    const [time, setTime]  =useState(new Date)
+    const iconSize = 110;
+
+    useEffect(() =>{
+        const interval =setInterval(() =>{
+            setTime(new Date()) //get current browser date
+        }, 1000)
+
+        return () =>clearInterval(interval) //clean up interval on mount
+    },[])
     return(
-        <div className="bg-[#022D36] opacity-0">
-            <div>
-                <p>{data.townName}</p>
-                <p>{data.time}</p>
-                <p>{data.townTemp}</p>
-                <p>{data.rain}</p>
-                <p>{data.surfacePressure}</p>
-                <p>{data.relativeHumidity}</p>
-                <p>{data.cloudCover}</p>
-                <p>{data.windSpeed}</p>
+        <div className="bg-[#022D36] flex flex-row justify-around ">
+            <div className=" ">
+                <p className="text-5xl">{data.townName}</p>
+                <p className=" font-semibold text-sm">{time.toLocaleTimeString("en-US", { 
+                hour: "2-digit", 
+                minute: "2-digit", 
+                second: "2-digit", 
+                hour12: true 
+                })}</p>
+                <p className="text-4xl mt-8">{Math.floor(data.townTemp)}°C</p>
+                {/* <p>{data.rain}</p> */}
+                {/* <p>{data.surfacePressure}</p> */}
+                {/* <p>{data.relativeHumidity}</p> */}
+                {/* <p>{data.cloudCover}</p> */}
+                {/* <p>{data.windSpeed}</p> */}
             </div>
 
-            <div>
-                {getWeatherIcon({rain :data.rain, cloudCover:data.cloudCover})}
+            <div className=" flex justify-center items-center">
+            {/* <span className="h-24 w-24"> */}
+                 {getWeatherIcon({rain :data.rain, cloudCover:data.cloudCover}, iconSize)}
+                 {/* {console.log()} */}
+            {/* </span> */}
+                
             </div>
         </div>
     )

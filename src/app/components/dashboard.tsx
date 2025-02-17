@@ -119,16 +119,16 @@ export default function Dashboard(){
 
     return(
         <main className="bg-[#022D36]  h-[100vh] w-[100vw]">
-            <header className="flex flex-row items-center justify-center">
-                <input type="text" placeholder=" Search city..." className="bg-[#919191] ">             
+            <header className="  p-5 flex justify-center">
+                <input type="text" placeholder=" Search city..." className="bg-[#919191] bg-opacity-[31%] rounded-md w-[30vw] h-9">             
                 </input>
-                <p>SKYCAST</p>
+                {/* <p>SKYCAST</p> */}
             </header>
 
             <div className="flex ">
                 <Menu />
 
-                <div className="w-[50vw] mx-8">
+                <div className="w-[64vw] mx-8">
                     <Board data={boardData}/>
                     <TodayForecast data={todaysForecastData}/>
                     <AirCondition data={airConditionData}/>                    

@@ -49,17 +49,17 @@ export const WeekForecast: React.FC<WeeklyForecastBoardProps> = ({ data }) => {
     weekdays[0]= "Today"    //replace the first day with today
     console.log("Weekdays", weekdays)
     return (
-        <div className="bg-[#919191] bg-opacity-[31%] p-4 h-[90vh] rounded-xl flex flex-col justify-evenly">
-            <h3 className="text-center mt-0 pt-0">7-DAY FORECAST</h3>
+        <div className="bg-[#919191] bg-opacity-[31%] p-4 h-[82vh] rounded-xl flex flex-col justify-evenly">
+            <h3 className="text-center mt-0 pt-0 opacity-75">7-DAY FORECAST</h3>
             {weekdays.map((weekday, index) => {
                 const { label, icon } = displayWeatherIcon(data.weatherCode[index]);
 
                 return (
                     <div key={index} className="flex  justify-evenly relative " >
-                        <span className=" mr-5">{weekday}</span>  {/* Time */}
+                        <span className=" mr-5 font-semibold">{weekday}</span>  {/* Time */}
                         <div className="inline-block"> {icon}  </div> {/* Weather Icon */}
-                        <span className="mx-4 w-32">{label}</span>  {/* Weather Condition Name */}
-                        <p className="text-right ">{Math.floor(data.apparentTemperatureMax[index])}°C</p>  {/* Temperature */}
+                        <span className="mx-4 w-32 font-extralight">{label}</span>  {/* Weather Condition Name */}
+                        <p className="text-right font-bold">{Math.floor(data.apparentTemperatureMax[index])}°C</p>  {/* Temperature */}
                     </div>
                 );
             })}

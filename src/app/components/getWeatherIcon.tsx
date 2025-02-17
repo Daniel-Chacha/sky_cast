@@ -2,18 +2,18 @@
 import { CloudIcon, SunCloudIcon, SunIcon, RainIcon, SunRainIcon } from "./icons";
 import { IconProps, } from "./types"; 
 
-export function getWeatherIcon({ rain, cloudCover}:IconProps): React.ReactElement {
+export function getWeatherIcon({ rain, cloudCover}:IconProps ,measure: number ): React.ReactElement {
     if(rain > 5){
-        return cloudCover > 50 ? <RainIcon /> : <SunRainIcon />
+        return cloudCover > 50 ? <RainIcon measure={measure} /> : <SunRainIcon measure={measure} />
 
     }else if(cloudCover > 70){
-        return <CloudIcon />
+        return <CloudIcon measure={measure} />
 
     }else if(cloudCover < 30){
-        return <SunCloudIcon /> 
+        return <SunCloudIcon measure={measure} /> 
 
     }else{
-        return <SunIcon />
+        return <SunIcon measure={measure} />
     }
 }
 
