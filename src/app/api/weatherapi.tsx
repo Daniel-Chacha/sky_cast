@@ -88,15 +88,15 @@ export default async function fetchWeatherData({req}:{req:number[]}){
         hourly: {
             time: range(Number(hourly.time()), Number(hourly.timeEnd()), hourly.interval()).map(
                 (t) => new Date((t + utcOffsetSeconds) * 1000)
-            ).slice(1, 7),
-            temperature2m: [...hourly.variables(0)!.valuesArray()!].slice(1, 7),  // ✅ Convert Float32Array to number[]
-            precipitationProbability: [...hourly.variables(2)!.valuesArray()!].slice(1, 7),  // ✅ Fix here
-            rain: [...hourly.variables(3)!.valuesArray()!].slice(1, 7),
-            surfacePressure: [...hourly.variables(5)!.valuesArray()!].slice(1, 7),
-            cloudCover: [...hourly.variables(6)!.valuesArray()!].slice(1, 7),
-            visibility: [...hourly.variables(7)!.valuesArray()!].slice(1, 7),
-            windSpeed10m: [...hourly.variables(8)!.valuesArray()!].slice(1, 7),
-            uvIndex: [...hourly.variables(10)!.valuesArray()!].slice(1,7),  // ✅ Fix here
+            ).slice(1, 6),
+            temperature2m: [...hourly.variables(0)!.valuesArray()!].slice(1, 6),  // ✅ Convert Float32Array to number[]
+            precipitationProbability: [...hourly.variables(2)!.valuesArray()!].slice(1, 6),  // ✅ Fix here
+            rain: [...hourly.variables(3)!.valuesArray()!].slice(1, 6),
+            surfacePressure: [...hourly.variables(5)!.valuesArray()!].slice(1, 6),
+            cloudCover: [...hourly.variables(6)!.valuesArray()!].slice(1, 6),
+            visibility: [...hourly.variables(7)!.valuesArray()!].slice(1, 6),
+            windSpeed10m: [...hourly.variables(8)!.valuesArray()!].slice(1,6),
+            uvIndex: [...hourly.variables(10)!.valuesArray()!].slice(1,6),  // ✅ Fix here
         },
         daily: {
             time: range(Number(daily.time()), Number(daily.timeEnd()), daily.interval()).map(
@@ -107,9 +107,9 @@ export default async function fetchWeatherData({req}:{req:number[]}){
         },
     };
     
-    console.log('CURRENT DATA', weatherData.current)
-    console.log('HOURLY DATA', weatherData.hourly)
-    console.log('DAILY DATA', weatherData.daily)
+    // console.log('CURRENT DATA', weatherData.current)
+    // console.log('HOURLY DATA', weatherData.hourly)
+    // console.log('DAILY DATA', weatherData.daily)
     
     // `weatherData` now contains a simple structure with arrays for datetime and weather data
     // for (let i = 0; i < weatherData.hourly.time.length; i++) {

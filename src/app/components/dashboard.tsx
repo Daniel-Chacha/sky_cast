@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import Menu from "./menu"
 import {TodayForecast} from "./todayForecast"
 import {AirCondition} from "./airCondition"
@@ -7,6 +7,7 @@ import {WeekForecast} from "./weekForecast"
 import {Board }from "./board"
 import fetchWeatherData from "../api/weatherapi"
 import { BoardData,Todays_forecast,Air_condition, Weekly_forecast } from "./types"
+import { LoadingIcon } from "./icons"
 
 export default function Dashboard(){
     const initialState ={
@@ -50,11 +51,115 @@ export default function Dashboard(){
         }
     }
 
-    const [weatherData, setWeatherData] = useState(initialState)
-    const [latitude, setLatitude] =useState<number | null>(-1.2864)
-    const [longitude, setLongitude] =useState<number | null>(36.8172)
-    const [town, setTown] =useState<string | null>("NAIROBI")
+    type locationData ={
+        city: string;
+        country: string;
+        latitude: number;
+        longitude: number
+    }
 
+    const [location, setLocation] =useState<locationData | null >(null)
+    const [weatherData, setWeatherData] = useState(initialState)
+    const [searchTerm, setSearchTerm] =useState<string>('')
+    const [suggestions, setSuggestions] =useState<Suggestion[]>([])
+    const [latitude, setLatitude] =useState<number | null>(null)
+    const [longitude, setLongitude] =useState<number | null>(null)
+    const [loading, setLoading] =useState(true)
+    const [town, setTown] =useState<string | null>(null)
+    // const inputRef =useRef(null)
+    // const [location, setLocation] =useState({lat:null, lng:null})
+
+    //take input change in real time
+    const handleInputChange =(event: React.ChangeEvent<HTMLInputElement>) =>{
+        setSearchTerm(event.target.value)
+    }
+
+    //get user location upon loading
+    useEffect(() =>{
+        const fetchLocation = async() =>{
+            try{
+                const response =await fetch("/api/location")
+                const data: locationData = await response.json();
+                setLocation(data)
+                setLatitude(data.latitude)
+                setLongitude(data.longitude)
+                setTown(data.city)
+                console.log('DATA', data)
+
+            }catch(error){
+                console.error('Error fetching location', error)
+
+            }finally{
+                setLoading(false)
+            }
+        }
+        fetchLocation()
+    }, []);
+
+    //fetch suggestions
+    useEffect(() =>{
+        const fetchSuggestions =async() =>{
+            if(searchTerm.length > 3){ //Only fetch when input is at least 1 characters
+                try{  // Limit to 5 suggestions
+                    const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${searchTerm}&format=json&limit=3` )
+                    
+                    const data =await response.json();
+                    setSuggestions(data)
+                    // setTown(searchTerm)
+                    console.log("NOMINATIM DATA", data)
+                }catch(error){
+                    console.error("Error fetching suggestions", error)
+                    setSuggestions([])   //clear suggestions on error
+                }
+            }else{
+                setSuggestions([]) //clear suggestions if input is too short
+            }
+        }
+
+        const debounce =setTimeout(fetchSuggestions, 10)          //debounce to prevent excessive requests
+
+        return () => clearTimeout(debounce)         //clear timeout on input change
+    }, [searchTerm])
+
+    //fetch the latitude and longitude incase the user decides to press enter on their input instead of picking a suggestion
+    const fetchLatLon = async(place: string) =>{
+        try {
+            const response =await fetch(`https://nominatim.openstreetmap.org/search?q=${place}&format=json&limit=1`)
+
+            const data: Suggestion[] = await response.json()
+
+            if (data.length > 0){
+                const lanLonDetails =data[0]
+                setLatitude(parseFloat(lanLonDetails.lat))
+                setLongitude(parseFloat(lanLonDetails.lon))
+                setTown(place)
+                // setLocation(null)
+            }else{
+                console.error('No results found for ', place)
+            }
+        } catch (error) {
+            console.error("Error fetching location", error)
+        }
+    }
+
+    // Define a type for the suggestion object
+    interface Suggestion {
+        display_name: string;
+        lat: string;  
+        lon: string;
+    }
+  
+  // Set the latitude and longitude when a suggestion is clicked
+  const handleSuggestionClick = (suggestion: Suggestion) => {
+    //   setSearchTerm((suggestion.display_name).split(",")[0].trim())
+      setLatitude(parseFloat(suggestion.lat)); // Convert to number
+      setLongitude(parseFloat(suggestion.lon)); // Convert to number
+      setTown(suggestion.display_name.split(",")[0].trim());
+      setSuggestions([]);
+  };
+
+
+  //Fetch weather data from NOMINATIM
     useEffect(() =>{
         async function fetchData(){
             if(latitude && longitude){
@@ -70,7 +175,20 @@ export default function Dashboard(){
             }
         }
         fetchData()
+        setSuggestions([])
     },[latitude,longitude])
+
+    //the handlekeydown function
+    const handleKeyDown =(event: React.KeyboardEvent<HTMLInputElement>) =>{
+        if (event.key === 'Enter'){
+            event.preventDefault()
+
+            if(searchTerm.trim().length > 3){
+                fetchLatLon(searchTerm)
+            }
+        }
+        setSuggestions([]);
+    }
 
     const boardData:BoardData={
         townName: town || "Unknown",
@@ -118,23 +236,40 @@ export default function Dashboard(){
     } 
 
     return(
-        <main className="bg-[#022D36]  h-[100vh] w-[100vw]">
-            <header className="  p-5 flex justify-center">
-                <input type="text" placeholder=" Search city..." className="bg-[#919191] bg-opacity-[31%] rounded-md w-[30vw] h-9">             
-                </input>
-                {/* <p>SKYCAST</p> */}
-            </header>
-
-            <div className="flex ">
-                <Menu />
-
-                <div className="w-[64vw] mx-8">
-                    <Board data={boardData}/>
-                    <TodayForecast data={todaysForecastData}/>
-                    <AirCondition data={airConditionData}/>                    
+        <main>
+            {loading ?(
+                <div className="flex justify-center items-center h-[100vh]">
+                    <LoadingIcon />
                 </div>
-                <WeekForecast data={weeklyForecast}/>
-            </div>
+            ): location ?(
+                <div className="bg-[#022D36]  h-[100vh] w-[100vw]">
+                    <header className="pl-[35vw]  p-5 items-center relative">
+                        <input type="text" placeholder=" Search city..." onKeyDown={handleKeyDown} value={searchTerm} onChange={handleInputChange} className="bg-[#919191] bg-opacity-[31%] rounded-md w-[30vw] h-9  pl-5">             
+                        </input>
+                        
+                        {suggestions.length > 0 &&(
+                            <ul className="border border-gray-300 rounded bg-[#919191] text-white bg-opacity-[31%] z-30 absolute w-[30vw]  top-full">
+                                {suggestions.map((suggestion, index) =>(
+                                    <li key={index} onClick={() => handleSuggestionClick(suggestion)} className="px-3 py-2 hover:bg-gray-300 hover:text-black hover:font-semibold cursor-pointer">{suggestion.display_name}</li>
+                                ))}
+                            </ul>
+                        )}
+                    </header>
+
+                    <div className="flex ">
+                        <Menu />
+
+                        <div className="w-[64vw] mx-8">
+                            <Board data={boardData}/>
+                            <TodayForecast data={todaysForecastData}/>
+                            <AirCondition data={airConditionData}/>                    
+                        </div>
+                        <WeekForecast data={weeklyForecast}/>
+                    </div>
+                </div>
+            ):(
+                <p className="text-center font-bold">A Problem Occurred Please Refresh The Page</p>
+            )}
         </main>
     )
 }

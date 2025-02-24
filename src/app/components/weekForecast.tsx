@@ -36,7 +36,7 @@ interface WeeklyForecastBoardProps {
 }
 
 export const WeekForecast: React.FC<WeeklyForecastBoardProps> = ({ data }) => {
-    console.log('DAYS', data.time.toLocaleString())
+    // console.log('DAYS', data.time.toLocaleString())
 
     const DAYS =data.time.toLocaleString()
 
@@ -46,8 +46,8 @@ export const WeekForecast: React.FC<WeeklyForecastBoardProps> = ({ data }) => {
     // convert dates to week days
     const weekdays =dates.map(date => new Date(date).toLocaleDateString('en-US',{weekday: "short"}))
 
-    weekdays[0]= "Today"    //replace the first day with today
-    console.log("Weekdays", weekdays)
+    // weekdays[0]= "Today"    //replace the first day with today
+    // console.log("Weekdays", weekdays)
     return (
         <div className="bg-[#919191] bg-opacity-[31%] p-4 h-[82vh] rounded-xl flex flex-col justify-evenly">
             <h3 className="text-center mt-0 pt-0 opacity-75">7-DAY FORECAST</h3>
