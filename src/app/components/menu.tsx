@@ -1,7 +1,36 @@
+import { useEffect, useState } from "react"
 
+const themes = {
+    green: "#022D36",
+    black: "#050100",
+    blue: "#0A1172",
+    purple: "#311432",
+    maroon: "#4D0F28"
+  };
 
+const THEME_STORAGE_KEY ="selectedTheme"
 
 export default function Menu(){
+    const [showTooltip, setShowTooltip] =useState(false)
+    const [selectedTheme, setSelectedTheme] =useState<string>(themes.green)
+
+    useEffect(()=>{
+        const savedTheme =localStorage.getItem(THEME_STORAGE_KEY);
+        if(savedTheme && Object.values(themes).includes(savedTheme)){
+            setSelectedTheme(savedTheme)
+            document.documentElement.style.setProperty("--background", savedTheme);
+        }else{
+            document.documentElement.style.setProperty("--background", selectedTheme)
+        }
+    },[])
+
+    //function to handle theme selection
+    const handleThemeChange =(theme:string) =>{
+        setSelectedTheme(theme);
+        localStorage.setItem(THEME_STORAGE_KEY, theme)
+        document.documentElement.style.setProperty("--background", theme);
+
+    }
     return(
         <div className="flex flex-col justify-around bg-[#919191] ml-3 h-[82vh] rounded-xl bg-opacity-[31%] items-center">
             <div>
@@ -11,19 +40,29 @@ export default function Menu(){
                 <p className="mt-0 text-xs">Weather</p>
             </div>
 
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 2048 2048">
-                    <path fill="currentColor" d="m1280 37l640 640v1371h-128V731l-384-384v421h128v1280h-384v-384h-128v384H640V768h384V640H256v1408H128V512h1024v256h128zm128 1883V896H768v1024h128v-384h384v384zM384 896V768h128v128zm0 256v-128h128v128zm0 256v-128h128v128zm0 256v-128h128v128zm0 256v-128h128v128zm896-896v128h-128v-128zm0 256v128h-128v-128zm-256-256v128H896v-128zm0 256v128H896v-128z"></path>
-                </svg>
-                <p className="mt-0 text-xs">Cities</p>
+            <div className="relative" onMouseEnter={()=>setShowTooltip(true)} onMouseLeave={()=>setTimeout(() => setShowTooltip(false), 200)}>
+                <div className="cursor-pointer " >
+                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M14.647 4.081a.724.724 0 0 0 1.08.448c2.439-1.485 5.23 1.305 3.745 3.744a.724.724 0 0 0 .447 1.08c2.775.673 2.775 4.62 0 5.294a.724.724 0 0 0-.448 1.08c1.485 2.439-1.305 5.23-3.744 3.745a.724.724 0 0 0-1.08.447c-.673 2.775-4.62 2.775-5.294 0a.724.724 0 0 0-1.08-.448c-2.439 1.485-5.23-1.305-3.745-3.744a.724.724 0 0 0-.447-1.08c-2.775-.673-2.775-4.62 0-5.294a.724.724 0 0 0 .448-1.08c-1.485-2.439 1.305-5.23 3.744-3.745a.722.722 0 0 0 1.08-.447c.673-2.775 4.62-2.775 5.294 0M12 9a3 3 0 1 0 0 6a3 3 0 0 0 0-6"></path>
+                    </svg>
+                    <p className="mt-0 text-xs">Theme</p>
+                </div>
+
+                {/* tooltip with theme colors */}
+                {showTooltip && (
+                    <div className=" absolute top-10 left-1/2  transform -translate-x-1/2 bg-white shadow-lg rounded-md p-2 z-50 flex flex-col space-y-2" >
+                        {Object.entries(themes).map(([key, color]) =>(
+                            <div 
+                            key={key} 
+                            className={`w-8 h-8 rounded-full cursor-pointer hover:scale-110 translation`}
+                            style={{ backgroundColor: color }}
+                            onClick={() => handleThemeChange(color)}
+                            ></div>
+                        ))}
+                    </div>
+                )}
             </div>
 
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M14.647 4.081a.724.724 0 0 0 1.08.448c2.439-1.485 5.23 1.305 3.745 3.744a.724.724 0 0 0 .447 1.08c2.775.673 2.775 4.62 0 5.294a.724.724 0 0 0-.448 1.08c1.485 2.439-1.305 5.23-3.744 3.745a.724.724 0 0 0-1.08.447c-.673 2.775-4.62 2.775-5.294 0a.724.724 0 0 0-1.08-.448c-2.439 1.485-5.23-1.305-3.745-3.744a.724.724 0 0 0-.447-1.08c-2.775-.673-2.775-4.62 0-5.294a.724.724 0 0 0 .448-1.08c-1.485-2.439 1.305-5.23 3.744-3.745a.722.722 0 0 0 1.08-.447c.673-2.775 4.62-2.775 5.294 0M12 9a3 3 0 1 0 0 6a3 3 0 0 0 0-6"></path>
-                </svg>
-                <p className="mt-0 text-xs">Theme</p>
-            </div>
 
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24">

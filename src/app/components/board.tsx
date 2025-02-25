@@ -20,7 +20,7 @@ export const  Board: React.FC<WeatherBoardProps> = ({data}) =>{
         return () =>clearInterval(interval) //clean up interval on mount
     },[])
     return(
-        <div className="bg-[#022D36] flex flex-row justify-around ">
+        <div className=" flex flex-row justify-around ">
             <div className=" ">
                 <p className="text-5xl">{data.townName}</p>
                 <p className=" font-semibold text-sm">{time.toLocaleTimeString("en-US", { 

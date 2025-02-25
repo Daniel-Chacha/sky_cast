@@ -66,6 +66,10 @@ export default function Dashboard(){
     const [longitude, setLongitude] =useState<number | null>(null)
     const [loading, setLoading] =useState(true)
     const [town, setTown] =useState<string | null>(null)
+    const [showWeatherData, setShowWeatherData] = useState(true)
+    const [showCitiesDialog, setShowCitiesDialog] =useState(false)
+    const [showThemeDialog, setShowThemeDialog] =useState(false)
+    const [showAbout, setShowAbout] = useState(false)
     // const inputRef =useRef(null)
     // const [location, setLocation] =useState({lat:null, lng:null})
 
@@ -242,15 +246,15 @@ export default function Dashboard(){
                     <LoadingIcon />
                 </div>
             ): location ?(
-                <div className="bg-[#022D36]  h-[100vh] w-[100vw]">
+                <div className="  h-[100vh] w-[100vw]">
                     <header className="pl-[35vw]  p-5 items-center relative">
-                        <input type="text" placeholder=" Search city..." onKeyDown={handleKeyDown} value={searchTerm} onChange={handleInputChange} className="bg-[#919191] bg-opacity-[31%] rounded-md w-[30vw] h-9  pl-5">             
+                        <input type="text" placeholder=" Search ..." onKeyDown={handleKeyDown} value={searchTerm} onChange={handleInputChange} className="bg-[#919191] bg-opacity-[31%] rounded-md w-[30vw] h-9  pl-5">             
                         </input>
                         
                         {suggestions.length > 0 &&(
-                            <ul className="border border-gray-300 rounded bg-[#919191] text-white bg-opacity-[31%] z-30 absolute w-[30vw]  top-full">
+                            <ul className="border border-gray-300 rounded bg-[#919191] text-white bg-opacity-[31%] z-30 absolute w-[30vw]  top-full ">
                                 {suggestions.map((suggestion, index) =>(
-                                    <li key={index} onClick={() => handleSuggestionClick(suggestion)} className="px-3 py-2 hover:bg-gray-300 hover:text-black hover:font-semibold cursor-pointer">{suggestion.display_name}</li>
+                                    <li key={index} onClick={() => handleSuggestionClick(suggestion)} className="px-3 py-2 hover:bg-gray-300 hover:text-black hover:font-semibold cursor-pointer overflow-hidden h-9">{suggestion.display_name}</li>
                                 ))}
                             </ul>
                         )}
