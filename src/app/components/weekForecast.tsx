@@ -55,7 +55,7 @@ export const WeekForecast: React.FC<WeeklyForecastBoardProps> = ({ data }) => {
                 const { label, icon } = displayWeatherIcon(data.weatherCode[index]);
 
                 return (
-                    <div key={index} className="flex  justify-evenly relative border-b-gray-400" >
+                    <div key={index} className="flex  justify-evenly relative border-b border-gray-400 last:border-b-0 pb-2" >
                         <span className=" mr-5 font-semibold">{weekday}</span>  {/* Time */}
                         <div className="inline-block"> {icon}  </div> {/* Weather Icon */}
                         <span className="mx-4 w-32 font-extralight">{label}</span>  {/* Weather Condition Name */}

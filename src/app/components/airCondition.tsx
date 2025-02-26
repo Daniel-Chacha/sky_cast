@@ -19,13 +19,13 @@ export const  AirCondition: React.FC<AirConditionBoardProps> =({data})=> {
                         <div className="flex flex-col justify-around">
                             
                             <div className="justify-around flex flex-row mt-3">
-                                <div className="relative border-r-gray-400">
+                                <div className="relative ">
                                     <ThermometerIcon />
                                     <span className="text-sm opacity-[80%]">Temp.</span>
                                     <p className="text-right font-bold">{Math.floor(data.temperature2m[index])}°C</p>
                                 </div>
         
-                                <div className="relative border-r-gray-400">
+                                <div className="relative ">
                                     <WindIcon />
                                     <span className="text-sm opacity-[80%]">Wind</span>
                                     <p className="text-right font-bold">{Math.floor(data.windSpeed10m[index])} Km/hr</p>
@@ -39,13 +39,13 @@ export const  AirCondition: React.FC<AirConditionBoardProps> =({data})=> {
                             </div>
         
                             <div className="flex flex-row    justify-around mt-5 mb-10">
-                                <div className="relative border-r-gray-400">
+                                <div className="relative ">
                                     <DropletIcon /> 
                                     <span className="text-sm opacity-[80%]">Precipitation Prob. </span>
                                     <p className="text-right font-bold"> {data.precipitationProbability[index]} %</p>
                                 </div>
         
-                                <div className="relative border-r-gray-400">
+                                <div className="relative ">
                                     <UvIndexIcon />
                                     <span className="text-sm opacity-[80%]">UV Index</span>
                                     <p className="text-right font-bold">{data.uvIndex[index]}</p>
