@@ -20,49 +20,131 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* defines how smoothly a transformation occurs */
-.item{
-  transition: transform 0.5s ease-in-out
-}
 
-
-/* ANIMATION FOR NEXT CLICK */
-
-/* animation to slide in the next item from the right */
-.item.slideIn{
-  z-index: 10;
-  animation: slideNext 0.9s  ease-in-out 1 forwards;
-
-
-/* moves the previous item to the back */
-.behind{
-  z-index: 9;
-  /* opacity: 0; */
-}}
-
-
-/* keyframe for sliding in animation */
-@keyframes slideNext{
-  from{
+@keyframes slide-left {
+  from {
     transform: translateX(100%);
   }
   to{
-    transform: translateX(0%);
+    transform: translateX(0);
   }
 }
 
-
-/* ANIMATION FOR PREV CLICK */
-.item.slideBack{
-  z-index: 10;
-  animation: slidePrev 0.5s ease-in-out 1 forwards;
-}
-
-@keyframes slidePrev {
+@keyframes slide-right {
   from{
     transform: translateX(-100%);
   }
   to{
-    transform: translateX(0%);
+    transform: translateX(0);
   }
 }
+
+.animate-slide-left{
+  animation: slide-left 1s ease-in-out forwards;
+}
+
+.animate-slide-right{
+  animation: slide-right 1s ease-in-out forwards;
+}
+
+
+/* applying 3D effect during change */
+@keyframes flip3d {
+  0%{
+    transform: perspective(400px) rotateX(0deg);
+    opacity: 1;
+  }
+  50%{
+    transform: perspective(400px) rotateX(90deg);
+    opacity: 0;
+  }
+  51%{
+    transform: perspective(400px) rotateX(-90deg);
+    opacity: 0;
+  }
+  100%{
+    transform: perspective(400px) rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+.animate-3d-flip{
+  animation: flip3d 1s ease-in-out;
+}
+
+/* span */
+.tunner{
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* custom class for white stroke */
+.text-stroke-white{
+  -webkit-text-stroke: 0.3px white;
+  color: transparent;    
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+/* animate words */
+/* @keyframes scroll-in-downwards {
+  from{
+    transform: translateY(-100%);
+  }
+  to{
+    transform: translateY(0);
+  }
+}
+.animate-in-down{
+  animation: scroll-in-downwards;
+}
+
+@keyframes scroll-out-downwards {
+  to{
+    transform: translateY(100%);
+  }
+}
+
+.animate-out-down{
+  animation: scroll-out-downwards ;
+} */
+
+/* @keyframes scroll-pause {
+  0%, 20%{transform: translateY(0);}
+  25%, 45% {transform: translateY(-100%);}
+  50%, 70%{transform: translateY(-200%);}
+  75%, 95% {transform: translateY(-300%);}
+  100%{transform: translateY(-400%);}
+}
+
+.animate-scroll{
+  animation: scroll-pause 2s steps(5, end)  infinite;
+} */
+
+/* @keyframes scroll-down {
+  0% { transform: translateY(0%); }
+  100% { transform: translateY(-100%); }
+}
+
+.animate-scroll {
+  animation: scroll-down 5s linear infinite;
+}
+
+@keyframes slideAndPause {
+  0%{
+    transform: translateX(0);
+  }
+  33.33%{
+    transform: translateY(-100%);
+  }
+  66.66%{
+    transform: translateY(-100%);
+  }
+  100%{
+    transform: translateY(-100%);
+  }
+}
+
+.slide-pause{
+  animation: slideAndPause 3s infinite steps(1);
+} */
