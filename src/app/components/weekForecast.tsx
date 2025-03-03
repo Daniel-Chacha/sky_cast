@@ -11,7 +11,7 @@
 //         <div className="bg-[#919191]">
 //             {data.time.map((time, index) =>(   
 //                 const {label, icon} = {displayWeatherIcon(data.weatherCode[index])} 
-                
+
 //                 return(
 //                     <div key={index}>
 //                         <p>{time}</p>
@@ -38,18 +38,18 @@ interface WeeklyForecastBoardProps {
 export const WeekForecast: React.FC<WeeklyForecastBoardProps> = ({ data }) => {
     // console.log('DAYS', data.time.toLocaleString())
 
-    const DAYS =data.time.toLocaleString()
+    const DAYS = data.time.toLocaleString()
 
     //extract unique dates
-    const dates =[...new Set(DAYS.match(/\d{1,2}\/\d{1,2}\/\d{4}/g))]
+    const dates = [...new Set(DAYS.match(/\d{1,2}\/\d{1,2}\/\d{4}/g))]
 
     // convert dates to week days
-    const weekdays =dates.map(date => new Date(date).toLocaleDateString('en-US',{weekday: "short"}))
+    const weekdays = dates.map(date => new Date(date).toLocaleDateString('en-US', { weekday: "short" }))
 
-    weekdays[0]= "Today"    //replace the first day with today
+    weekdays[0] = "Today"    //replace the first day with today
     // console.log("Weekdays", weekdays)
     return (
-        <div className="bg-[#919191] bg-opacity-[31%] p-4 h-[82vh] rounded-xl flex flex-col justify-evenly">
+        <div className="bg-[#919191] bg-opacity-[31%] p-4 lg:h-[82vh] lg:m-0 my-8  rounded-xl flex flex-col justify-evenly">
             <h3 className="text-center mt-0 pt-0 opacity-75">7-DAY FORECAST</h3>
             {weekdays.map((weekday, index) => {
                 const { label, icon } = displayWeatherIcon(data.weatherCode[index]);

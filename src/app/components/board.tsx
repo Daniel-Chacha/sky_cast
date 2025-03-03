@@ -21,7 +21,7 @@ export const  Board: React.FC<WeatherBoardProps> = ({data}) =>{
     },[])
     return(
         <div className=" flex flex-row justify-around ">
-            <div className=" ">
+            <div>
                 <p className="text-5xl">{data.townName}</p>
                 <p className=" font-semibold text-sm">{time.toLocaleTimeString("en-US", { 
                 hour: "2-digit", 
