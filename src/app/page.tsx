@@ -1,14 +1,11 @@
 'use client';
-import {  useRef } from 'react';
+
 import "./globals.css";
 import Link from "next/link";
 import { LandingPageCarousel } from "./components/landingCarousel";
 import { Button } from '@material-tailwind/react';
 
 export default function Home() {
-  // const itemsRef = useRef<HTMLElement[]>([]); // Ref for items
-  // console.log('itemsRef.current', itemsRef.current)
-
   const pictures = ["/images/img7.avif", "/images/img8.webp", "/images/img9.jpeg",];
 
   return (

@@ -66,8 +66,7 @@ export default function Dashboard() {
     const [longitude, setLongitude] = useState<number | null>(null)
     const [loading, setLoading] = useState(true)
     const [town, setTown] = useState<string | null>(null)
-    // const inputRef =useRef(null)
-    // const [location, setLocation] =useState({lat:null, lng:null})
+
 
     //take input change in real time
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,7 +83,7 @@ export default function Dashboard() {
                 setLatitude(data.latitude)
                 setLongitude(data.longitude)
                 setTown(data.city)
-                console.log('DATA', data)
+                // console.log('DATA', data)
 
             } catch (error) {
                 console.error('Error fetching location', error)
@@ -106,7 +105,7 @@ export default function Dashboard() {
                     const data = await response.json();
                     setSuggestions(data)
                     // setTown(searchTerm)
-                    console.log("NOMINATIM DATA", data)
+                    // console.log("NOMINATIM DATA", data)
                 } catch (error) {
                     console.error("Error fetching suggestions", error)
                     setSuggestions([])   //clear suggestions on error
@@ -151,7 +150,6 @@ export default function Dashboard() {
 
     // Set the latitude and longitude when a suggestion is clicked
     const handleSuggestionClick = (suggestion: Suggestion) => {
-        //   setSearchTerm((suggestion.display_name).split(",")[0].trim())
         setLatitude(parseFloat(suggestion.lat)); // Convert to number
         setLongitude(parseFloat(suggestion.lon)); // Convert to number
         setTown(suggestion.display_name.split(",")[0].trim());
@@ -167,7 +165,7 @@ export default function Dashboard() {
                     const req = [latitude, longitude]
                     const data = await fetchWeatherData({ req })
                     setWeatherData(data)
-                    console.log('WeatherData State', weatherData)
+                    // console.log('WeatherData State', weatherData)
                 } catch (error) {
                     console.error('Error fetching data:', error);
                 }
@@ -262,7 +260,7 @@ export default function Dashboard() {
                         )}
                     </header>
 
-                    <div className="lg:flex lg:w-[100vw] lg:mx-0 relative w-[94.5vw] mx-2 ml-5 lg:ml-0">
+                    <div className="lg:flex lg:w-[100vw] lg:mx-0 relative w-[94.5vw] mx-2 sm:ml-5 lg:ml-0">
                         <div className="hidden lg:block"><Menu /></div>
 
 

@@ -5,7 +5,6 @@ export const ThreeDText = () => {
     const words = ['REAL-TIME', 'ACCURATE', 'RELIABLE', 'TRUSTED', 'DETAILED', 'CREDIBLE'];
     const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
     const [isTextAnimating, setIsTextAnimating] = useState<boolean>(false);
-    // const textContainerRef = useRef<HTMLSpanElement | null >(null);
 
     useEffect(() => {
         //start after 1 second

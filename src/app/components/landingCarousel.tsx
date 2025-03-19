@@ -1,7 +1,6 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 import { ThreeDText } from "./slidingText";
 
 export const LandingPageCarousel = ({ images }: { images: string[] }) => {
