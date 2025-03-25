@@ -27,10 +27,10 @@ export default async function fetchWeatherData({req}:{req:number[]}){
     
     // Attributes for timezone and location
     const utcOffsetSeconds = response.utcOffsetSeconds();
-    const timezone = response.timezone();
-    const timezoneAbbreviation = response.timezoneAbbreviation();
-    const latitude = response.latitude();
-    const longitude = response.longitude();
+    // const timezone = response.timezone();
+    // const timezoneAbbreviation = response.timezoneAbbreviation();
+    // const latitude = response.latitude();
+    // const longitude = response.longitude();
     
     const current = response.current()!;
     const hourly = response.hourly()!;
