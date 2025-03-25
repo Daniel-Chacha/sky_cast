@@ -77,11 +77,16 @@ export default function Dashboard() {
     useEffect(() => {
         const fetchLocation = async () => {
             try {
-                const response = await fetch("/api/location")
-                const data: locationData = await response.json();
-                setLocation(data)
-                setLatitude(data.latitude)
-                setLongitude(data.longitude)
+                const response = await fetch("http://ip-api.com/json/");
+                const data = await response.json();
+                setLocation({
+                    city: data.city,
+                    country: data.country,
+                    latitude: data.lat,
+                    longitude: data.lon,
+                    });
+                setLatitude(data.lat)
+                setLongitude(data.lon)
                 setTown(data.city)
                 // console.log('DATA', data)
 
