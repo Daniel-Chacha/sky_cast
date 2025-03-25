@@ -3,7 +3,7 @@
     export async function GET() {
         console.log('connected ')
     try {
-        const response = await fetch("http://ip-api.com/json/");
+        const response = await fetch("http://ipapi.co/json/");
         
         // Check if response is OK (status 200)
         if (!response.ok) {
@@ -15,8 +15,8 @@
         return NextResponse.json({
         city: data.city,
         country: data.country,
-        latitude: data.lat,
-        longitude: data.lon,
+        latitude: data.latitude,
+        longitude: data.longitude,
         });
     } catch (error) {
         console.error("Error fetching location:", error);
