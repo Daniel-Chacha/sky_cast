@@ -71,7 +71,7 @@ export const LandingPageCarousel = ({ images }: { images: string[] }) => {
                 <div className="top-[15%] absolute z-30 left-[10%] lg:top-[8%] sm:top-[10%]">
                     <h1 className="font-bold  text-4xl my-4 text-transparent bg-clip-text tracking-widest sm:text-5xl lg:text-4xl"
                         style={{
-                            backgroundImage: `url("images/img2.avif")`,
+                            backgroundImage: `url('images/img2.avif')`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             WebkitTextFillColor: 'transparent',
