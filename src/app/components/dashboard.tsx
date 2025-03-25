@@ -81,7 +81,7 @@ export default function Dashboard() {
                 const response = await fetch('https://freeipapi.com/api/json');
                 
                 const data = await response.json();
-                const [lat, long] = data.loc.split(',');
+                // const [lat, long] = data.loc.split(',');
                 setLocation({
                     // city: data.city,
                     // country:  data.country,
@@ -90,16 +90,16 @@ export default function Dashboard() {
 
                     city: data.cityName,
                     country:  data.countryName,
-                    latitude: lat,
-                    longitude: long,
+                    latitude: data.latitude,
+                    longitude: data.longitude,
                     });
                 // setLatitude(data.lat)
                 // setLongitude(data.lon)
                 // setTown(data.city)
 
-                setLatitude(lat)
-                setLongitude(long)
-                setTown(data.city)
+                setLatitude(data.latitude)
+                setLongitude(data.longitude)
+                setTown(data.cityName)
 
                 
                 console.log('DATA', data)
