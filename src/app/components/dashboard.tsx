@@ -77,29 +77,29 @@ export default function Dashboard() {
     useEffect(() => {
         const fetchLocation = async () => {
             try {
-                const response = await fetch("http://ip-api.com/json/");
-                // const response = await fetch('https://freeipapi.com/api/json');
+                // const response = await fetch("http://ip-api.com/json/");
+                const response = await fetch('https://freeipapi.com/api/json');
                 
                 const data = await response.json();
-                // const [latit, longit] = data.loc.split(',');
+                const [lat, long] = data.loc.split(',');
                 setLocation({
-                    city: data.city,
-                    country:  data.country,
-                    latitude: data.lat,
-                    longitude: data.lon,
+                    // city: data.city,
+                    // country:  data.country,
+                    // latitude: data.lat,
+                    // longitude: data.lon,
 
-                    // city: data.cityName,
-                    // country:  data.countryName,
-                    // latitude: latit,
-                    // longitude: longit,
+                    city: data.cityName,
+                    country:  data.countryName,
+                    latitude: lat,
+                    longitude: long,
                     });
-                setLatitude(data.lat)
-                setLongitude(data.lon)
-                setTown(data.city)
-
-                // setLatitude(latit)
-                // setLongitude(longit)
+                // setLatitude(data.lat)
+                // setLongitude(data.lon)
                 // setTown(data.city)
+
+                setLatitude(lat)
+                setLongitude(long)
+                setTown(data.city)
 
                 
                 console.log('DATA', data)
