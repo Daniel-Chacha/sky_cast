@@ -78,17 +78,31 @@ export default function Dashboard() {
         const fetchLocation = async () => {
             try {
                 const response = await fetch("http://ip-api.com/json/");
+                // const response = await fetch('https://freeipapi.com/api/json');
+                
                 const data = await response.json();
+                // const [latit, longit] = data.loc.split(',');
                 setLocation({
                     city: data.city,
-                    country: data.country,
+                    country:  data.country,
                     latitude: data.lat,
                     longitude: data.lon,
+
+                    // city: data.cityName,
+                    // country:  data.countryName,
+                    // latitude: latit,
+                    // longitude: longit,
                     });
                 setLatitude(data.lat)
                 setLongitude(data.lon)
                 setTown(data.city)
-                // console.log('DATA', data)
+
+                // setLatitude(latit)
+                // setLongitude(longit)
+                // setTown(data.city)
+
+                
+                console.log('DATA', data)
 
             } catch (error) {
                 console.error('Error fetching location', error)

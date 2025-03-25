@@ -10,7 +10,7 @@ interface ForecastBoardProp {
 
 export const TodayForecast: React.FC<ForecastBoardProp> = ({ data }) => {
     const iconSize = 36
-    console.log('DATA.TIME', data.time.toLocaleString())
+    // console.log('DATA.TIME', data.time.toLocaleString())
     return (
         <div className="bg-[#919191] bg-opacity-[31%] rounded-lg">
             <h3 className="text-center py-2 opacity-75"> TODAY&apos;S FORECAST, {data.time.toLocaleString().split(',')[0].trim().split(' ')[0]}</h3>
