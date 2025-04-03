@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Skycast Weather Forecast",
+  title: "MeteoSphere",
   description: "You daily weather forecast website",
 };
 
