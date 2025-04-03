@@ -75,7 +75,7 @@ export const LandingPageCarousel = ({ images }: { images: string[] }) => {
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             WebkitTextFillColor: 'transparent',
-                        }}>SKYCAST</h1>
+                        }}>MeteoSphere</h1>
 
                     <h2 className="text-xl font-bold  lg:text-5xl my-5 sm:text-4xl">STAY AHEAD OF THE WEATHER</h2>
 
