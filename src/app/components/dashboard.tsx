@@ -77,32 +77,29 @@ export default function Dashboard() {
     useEffect(() => {
         const fetchLocation = async () => {
             try {
-                // const response = await fetch("http://ip-api.com/json/");
-                const response = await fetch('https://freeipapi.com/api/json');
+                 const response = await fetch('https://api.ipify.org?format=json');
                 
-                const data = await response.json();
-                // const [lat, long] = data.loc.split(',');
+                const result = await response.json();
+                // console.log("ip address", result)
+
+                const res = await fetch(`https://api.ipapi.is/?q=${result.ip}`);
+                const data = await res.json();
+                // console.log("Location Data", data)
+                
                 setLocation({
-                    // city: data.city,
-                    // country:  data.country,
-                    // latitude: data.lat,
-                    // longitude: data.lon,
 
-                    city: data.cityName,
-                    country:  data.countryName,
-                    latitude: data.latitude,
-                    longitude: data.longitude,
+                    city: data.location.city,
+                    country:  data.location.country,
+                    latitude: data.location.latitude,
+                    longitude: data.location.longitude,
                     });
-                // setLatitude(data.lat)
-                // setLongitude(data.lon)
-                // setTown(data.city)
 
-                setLatitude(data.latitude)
-                setLongitude(data.longitude)
-                setTown(data.cityName)
+                setLatitude(data.location.latitude)
+                setLongitude(data.location.longitude)
+                setTown(data.location.city)
 
                 
-                console.log('DATA', data)
+                // console.log('DATA', data)
 
             } catch (error) {
                 console.error('Error fetching location', error)
