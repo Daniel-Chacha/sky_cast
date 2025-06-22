@@ -5,7 +5,7 @@ import Link from "next/link";
 import { LandingPageCarousel } from "./components/landingCarousel";
 
 export default function Home() {
-  const pictures = ["/images/img7.avif", "/images/img8.webp", "/images/img9.jpeg",];
+  const pictures = ["/images/imga.avif", "/images/img9.jpeg", "/images/imgg.avif","/images/imgh.avif", "/images/imgj.avif", "/images/imgk.avif", "/images/imgl.avif", ];
 
   return (
     <main className="carousel overflow-hidden relative h-[100vh] w-[100vw]">

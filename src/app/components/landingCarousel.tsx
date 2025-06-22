@@ -83,7 +83,7 @@ export const LandingPageCarousel = ({ images }: { images: string[] }) => {
                     </h2>
 
                     <ThreeDText />
-
+               
                     {/* <h4 className="text-xl font-bold  sm:text-2xl ">Experience:</h4>
                     <ul className="font-bold  sm:text-xl  ">
                         <li className="ml-5 sm:ml-20">✔  Hyper-accurate predictions</li>

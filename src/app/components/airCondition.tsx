@@ -50,7 +50,7 @@ export const AirCondition: React.FC<AirConditionBoardProps> = ({ data }) => {
     }
 
     return (
-        <div className="mt-3 rounded-xl h-auto">
+        <div className="mt-3 rounded-xl ">
             <div className="relative">
                 <button
                     onClick={scrollLeft}
@@ -61,13 +61,13 @@ export const AirCondition: React.FC<AirConditionBoardProps> = ({ data }) => {
 
                 <div
                     ref={scrollContainerRef}
-                    className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth hide-scrollbar"
+                    className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth hide-scrollbar "
 
                 >
                     {data.time.map((datum, index) => (
                         <div
                             key={index}
-                            className="h-full min-w-[100%] snap-start bg-[#919191] bg-opacity-[31%] p-4"
+                            className="h-full min-w-[100%] snap-start bg-[#919191] bg-opacity-[31%] p-4 rounded-lg"
                         >
                             <h3 className="text-center opacity-75">
                                 AIR CONDITION FORECAST at{" "}
@@ -100,7 +100,7 @@ export const AirCondition: React.FC<AirConditionBoardProps> = ({ data }) => {
                                     </div>
                                 </div>
 
-                                <div className="mt-10 flex flex-row justify-around lg:mt-5 mb-10">
+                                <div className="mt-10 flex flex-row flex-wrap justify-around lg:mt-5 mb-10">
                                     <div className="relative">
                                         <DropletIcon />
                                         <span className="text-sm opacity-[80%]">Precipitation Prob.</span>
@@ -113,7 +113,7 @@ export const AirCondition: React.FC<AirConditionBoardProps> = ({ data }) => {
                                         <p className="text-right font-bold">{Math.floor(data.uvIndex[index])}</p>
                                     </div>
 
-                                    <div className="relative">
+                                    <div className="relative max-sm:mt-3">
                                         <PressureIcon />
                                         <span className="text-sm opacity-[80%]">Atm. Pressure</span>
                                         <p className="text-right font-bold">{Math.floor(data.surfacePressure[index])} Pa.</p>
