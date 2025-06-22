@@ -1,30 +1,3 @@
-// 'use client'
-// import { displayWeatherIcon } from "./getWeatherIcon"
-// import { Weekly_forecast } from "./types"
-
-// interface weeklyForecastBoardProps{
-//     data:Weekly_forecast
-// }
-
-// export const  WeekForecast: React.FC<weeklyForecastBoardProps> =({data}) =>{
-//     return(
-//         <div className="bg-[#919191]">
-//             {data.time.map((time, index) =>(   
-//                 const {label, icon} = {displayWeatherIcon(data.weatherCode[index])} 
-
-//                 return(
-//                     <div key={index}>
-//                         <p>{time}</p>
-//                         {icon}
-//                         <p>{label}</p>
-//                         <p>{data.temperature2mMax[index]}°C</p>
-//                     </div>
-//                 )
-
-//             ))}
-//         </div>
-//     )
-// }
 
 'use client'
 import React from "react";
@@ -58,7 +31,7 @@ export const WeekForecast: React.FC<WeeklyForecastBoardProps> = ({ data }) => {
                     <div key={index} className="flex  justify-evenly relative border-b border-gray-400 last:border-b-0 pb-2" >
                         <span className=" mr-5 font-semibold">{weekday}</span>  {/* Time */}
                         <div className="inline-block"> {icon}  </div> {/* Weather Icon */}
-                        <span className="mx-4 w-32 font-extralight">{label}</span>  {/* Weather Condition Name */}
+                        <span className="mx-4 w-28 font-extralight">{label}</span>  {/* Weather Condition Name */}
                         <p className="text-right font-bold">{Math.floor(data.apparentTemperatureMax[index])}°C</p>  {/* Temperature */}
                     </div>
                 );

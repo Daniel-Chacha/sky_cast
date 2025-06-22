@@ -276,12 +276,12 @@ export default function Dashboard() {
                         )}
                     </header>
 
-                    <div className="lg:flex lg:w-[100vw] lg:mx-0 relative w-[94.5vw] mx-2 sm:ml-5 lg:ml-0">
+                    <div className="lg:flex lg:flex-row lg:justify-between lg:w-[100vw] lg:mx-0 relative w-[94.5vw] mx-2 sm:ml-5 lg:ml-0">
                         <div className="hidden lg:block"><Menu /></div>
 
 
 
-                        <div className="w-[94.5vw]  flex flex-col justify-center lg:w-[64vw] lg:mx-8">
+                        <div className="w-[94.5vw]  flex flex-col justify-center lg:w-[64vw] lg:mx-4">
                             <Board data={boardData} />
                             <TodayForecast data={todaysForecastData} />
                             <AirCondition data={airConditionData} />
@@ -290,7 +290,7 @@ export default function Dashboard() {
                     </div>
                 </div>
             ) : (
-                <p className="text-center font-bold mt-10">A Problem Occurred Please Refresh The Page</p>
+                <p className="text-center font-bold mt-20">A Problem Occurred. Please Refresh The Page</p>
             )}
         </main>
     )

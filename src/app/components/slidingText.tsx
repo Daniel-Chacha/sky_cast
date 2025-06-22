@@ -29,7 +29,7 @@ export const ThreeDText = () => {
 
     return (
         <h3 className="text-2xl font-bold sm:text-5xl lg:text-4xl my-4 tracking-widest flex flex-row items-center">
-            <span className={`w-40 relative inline-block overflow-hidden transition-all duration-1000 sm:w-80 lg:w-60 text-transparent bg-clip-text text-stroke-white
+            <span className={`w-40 relative inline-block overflow-hidden transition-all duration-1000 sm:w-80 lg:w-60 text-transparent bg-clip-text 
                             ${isTextAnimating ? 'animate-3d-flip' : ''}`}
                 key={currentWordIndex}
                 style={{
